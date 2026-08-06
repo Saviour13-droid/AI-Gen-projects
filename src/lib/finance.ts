@@ -85,7 +85,7 @@ export function useFinance() {
   }, []);
 
   const addIncome = useCallback(
-    (input: { amount: number; date: string; note?: string; split: Split }) =>
+    (input: { amount: number; date: string; note?: string | undefined; split: Split }) =>
       update((d) => ({
         ...d,
         transactions: [
@@ -97,7 +97,12 @@ export function useFinance() {
   );
 
   const addExpense = useCallback(
-    (input: { amount: number; date: string; note?: string; category: CategoryId }) =>
+    (input: {
+      amount: number;
+      date: string;
+      note?: string | undefined;
+      category: CategoryId;
+    }) =>
       update((d) => ({
         ...d,
         transactions: [
