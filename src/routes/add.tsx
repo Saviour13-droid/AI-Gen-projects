@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   CATEGORIES,
   categoryStats,
@@ -35,6 +34,7 @@ export const Route = createFileRoute("/add")({
 });
 
 function AddPage() {
+  const [tab, setTab] = useState<"income" | "expense">("income");
   return (
     <div className="space-y-4">
       <header>
@@ -42,18 +42,23 @@ function AddPage() {
         <p className="text-sm text-muted-foreground">Rent received, or money spent.</p>
       </header>
 
-      <Tabs defaultValue="income">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="income">Income</TabsTrigger>
-          <TabsTrigger value="expense">Expense</TabsTrigger>
-        </TabsList>
-        <TabsContent value="income" className="mt-4">
-          <IncomeForm />
-        </TabsContent>
-        <TabsContent value="expense" className="mt-4">
-          <ExpenseForm />
-        </TabsContent>
-      </Tabs>
+      <div className="grid grid-cols-2 gap-1 rounded-xl bg-secondary p-1">
+        {(["income", "expense"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setTab(t)}
+            aria-pressed={tab === t}
+            className={`rounded-lg py-2 text-sm font-semibold capitalize transition-all active:scale-[0.98] ${
+              tab === t ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {tab === "income" ? <IncomeForm /> : <ExpenseForm />}
     </div>
   );
 }
