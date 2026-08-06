@@ -18,7 +18,7 @@ export type Income = {
   type: "income";
   amount: number;
   date: string;
-  note?: string;
+  note?: string | undefined;
   split: Split;
 };
 
@@ -27,7 +27,7 @@ export type Expense = {
   type: "expense";
   amount: number;
   date: string;
-  note?: string;
+  note?: string | undefined;
   category: CategoryId;
 };
 
